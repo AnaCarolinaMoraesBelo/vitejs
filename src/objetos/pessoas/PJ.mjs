@@ -4,6 +4,7 @@ import IE from "./IE.mjs";
 export default class PJ extends Pessoa {
   #cnpj;
   #ie;
+  #dataRegistro; 
 
   setCNPJ(cnpj) {
     if (cnpj && cnpj.length >= 14) {
@@ -17,6 +18,14 @@ export default class PJ extends Pessoa {
     return this.#cnpj;
   }
 
+  setDataRegistro(data) {
+    this.#dataRegistro = data;
+  }
+
+  getDataRegistro() {
+    return this.#dataRegistro;
+  }
+
   setIE(ie) {
     if (ie instanceof IE) {
       this.#ie = ie;
@@ -28,5 +37,16 @@ export default class PJ extends Pessoa {
 
   getIE() {
     return this.#ie;
+  }
+
+  toJSON() {
+    const jsonBase = super.toJSON ? super.toJSON() : {};
+    
+    return {
+      ...jsonBase,
+      cnpj: this.#cnpj,
+      ie: this.#ie,
+      dataRegistro: this.#dataRegistro 
+    };
   }
 }
