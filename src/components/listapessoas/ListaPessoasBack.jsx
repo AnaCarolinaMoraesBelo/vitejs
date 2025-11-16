@@ -15,7 +15,6 @@ export default function ListaPessoas() {
   const pfDAO = new PFDAO();
   const pjDAO = new PJDAO();
 
-  // 🔹 Atualiza a lista conforme o tipo ou filtro
   function carregarLista() {
     const dao = tipo === "PF" ? pfDAO : pjDAO;
     const lista = dao.listar();
@@ -53,7 +52,21 @@ export default function ListaPessoas() {
       title: tipo === "PF" ? "CPF" : "CNPJ",
       dataIndex: tipo === "PF" ? "cpf" : "cnpj",
       key: "doc",
-      width: 200,
+      width: 150,
+    },
+    {
+      title: tipo === "PF" ? "Data Nascimento" : "Data Registro",
+      dataIndex: tipo === "PF" ? "dataNascimento" : "dataRegistro",
+      key: "data",
+      width: 140,
+      render: (valor) => {
+        if (!valor) return "-";
+        const partes = valor.split('-');
+        if (partes.length === 3) {
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+        return valor;
+      }
     },
     {
       title: "Ações",
