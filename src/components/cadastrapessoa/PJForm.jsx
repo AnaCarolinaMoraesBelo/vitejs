@@ -10,6 +10,20 @@ export default function PJForm() {
 
   return (
     <>
+      {/* === NOVO CAMPO: Data de Registro da Empresa (Requisito do trabalho) === */}
+      <Form.Item
+        label="Data de Registro da Empresa"
+        name="dataRegistro" // Esse nome conecta com a lógica que criamos no PessoaFormBack
+        rules={[{ required: true, message: "Informe a data de registro da empresa!" }]}
+      >
+        <DatePicker
+          style={{ width: "100%" }}
+          format="DD/MM/YYYY"
+          placeholder="Selecione a data de abertura"
+        />
+      </Form.Item>
+
+      {/* === Dados Existentes da IE === */}
       <h3 style={{ marginTop: 20 }}>Dados da Inscrição Estadual (IE)</h3>
 
       <Form.Item
@@ -34,9 +48,9 @@ export default function PJForm() {
       >
         <DatePicker
           style={{ width: "100%" }}
-          format="YYYY-MM-DD"
+          format="DD/MM/YYYY" // Ajustei para padrão BR para ficar consistente
           allowClear
-          placeholder="Selecione a data de registro"
+          placeholder="Selecione a data de registro da IE"
         />
       </Form.Item>
     </>
