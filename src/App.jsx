@@ -1,16 +1,15 @@
-//import Login from "./componentes/props/Login.jsx"
-//import Login from "./componentes/state/Login.jsx"
-//import Login from "./componentes/CSS/Login.jsx"
-//import Login from "./componentes/tailwind/Login.jsx"
-//import Login from "./componentes/antd/Login.jsx"
-import PessoaForm from './componentes/cadastrapessoa/PessoaForm.jsx';
+import { BrowserRouter as Router } from "react-router-dom";
+//import AppRoutes from "./routes/AppRoutes.jsx";
+//import AppRoutes from "./routes/AppRoutesV2.jsx";
+import AppRoutes from "./routes/AppRoutesBack.jsx";
 
 function App() {
+
   return (
-    <>
-      <PessoaForm />
-    </>
-  );
+    <Router>
+      <AppRoutes />
+    </Router>
+  )
 }
 
-export default App;
+export default App
