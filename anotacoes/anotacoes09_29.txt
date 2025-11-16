@@ -1,0 +1,34 @@
+//OBS: ajustar códigos do componentes e tals
+
+State --> variável (exclusiva do componente)
+manter o conteúdo entre as renderizações (pois quando se renderiza uma variável, perde o valor da variável)
+
+renderização?
+assistir playlist de react
+
+
+evento significa 
+
+
+eveto onChange = toda vez que houver um evento na caixa de texto (podendo ser digitado ou não) ele chama uma função
+
+
+
+div = tag que representa um bloco
+
+
+label?
+
+handleClick????
+
+
+ambos os eventos representão modificação
+
+
+renderização == reload?????
+
+
+navegação entre telas = local host
+
+
+css = estilo = próxima aula

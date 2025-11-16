@@ -1,0 +1,3 @@
+<br> é quebra de linha, porém <br\> é a quebra de linha no react
+cria arquivos em JS, importa eles como ... e chama eles como tags
+<div> = direcionamento, 
