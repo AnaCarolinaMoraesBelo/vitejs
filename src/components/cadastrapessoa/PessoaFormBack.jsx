@@ -57,9 +57,17 @@ export default function PessoaForm() {
         if (tipoParam === "PF") {
           valores.cpf = pessoa.cpf;
           valores.titulo = pessoa.titulo || { numero: "", zona: "", secao: "" };
+          
+          // 🟢 ALTERAÇÃO 1: Carregar Data de Nascimento (Converter string para DayJS)
+          valores.dataNascimento = pessoa.dataNascimento ? dayjs(pessoa.dataNascimento) : null;
+
         } else {
           const ieObj = pessoa.ie || {};
           valores.cnpj = pessoa.cnpj;
+          
+          // 🟢 ALTERAÇÃO 2: Carregar Data de Registro PJ
+          valores.dataRegistro = pessoa.dataRegistro ? dayjs(pessoa.dataRegistro) : null;
+
           valores.ie = {
             numero: ieObj.numero || "",
             estado: ieObj.estado || "",
@@ -114,6 +122,18 @@ export default function PessoaForm() {
         pf.setCPF(values.cpf);
         pf.setEndereco(end);
 
+        // 🟢 ALTERAÇÃO 3: Salvar Data de Nascimento
+        // Convertendo o objeto dayjs do DatePicker para string "YYYY-MM-DD"
+        const dn = values.dataNascimento;
+        const dataNascStr = (dn && typeof dn === "object" && typeof dn.format === "function")
+             ? dn.format("YYYY-MM-DD") 
+             : "";
+        
+        // Certifique-se de criar este método na classe PF.mjs!
+        if (typeof pf.setDataNascimento === 'function') {
+            pf.setDataNascimento(dataNascStr);
+        }
+
         if (values.titulo) {
           const t = new Titulo();
           t.setNumero(values.titulo.numero);
@@ -139,19 +159,30 @@ export default function PessoaForm() {
         pj.setCNPJ(values.cnpj);
         pj.setEndereco(end);
 
+        // 🟢 ALTERAÇÃO 4: Salvar Data de Registro da Empresa
+        const drEmpresa = values.dataRegistro; // Campo novo que criamos no PJForm
+        const dataRegStr = (drEmpresa && typeof drEmpresa === "object" && typeof drEmpresa.format === "function")
+             ? drEmpresa.format("YYYY-MM-DD") 
+             : "";
+
+        // Certifique-se de criar este método na classe PJ.mjs!
+        if (typeof pj.setDataRegistro === 'function') {
+            pj.setDataRegistro(dataRegStr);
+        }
+
         if (values.ie) {
           const ie = new IE();
           ie.setNumero(values.ie.numero);
           ie.setEstado(values.ie.estado);
 
-          // 👇 converte dayjs → string para salvar no DAO
+          // Lógica existente do IE (Mantida igual)
           const dr = values.ie.dataRegistro;
-          const dataRegistro =
+          const dataRegistroIE =
             dr && typeof dr === "object" && typeof dr.format === "function"
               ? dr.format("YYYY-MM-DD")
               : dr || "";
 
-          ie.setDataRegistro(dataRegistro);
+          ie.setDataRegistro(dataRegistroIE);
           pj.setIE(ie);
         }
 
@@ -271,6 +302,8 @@ export default function PessoaForm() {
 
           <EnderecoForm />
           <TelefoneList form={form} />
+          
+          {/* Os inputs de DATA estarão dentro destes componentes abaixo */}
           {tipo === "PF" ? <PFForm /> : <PJForm />}
 
           <Form.Item style={{ marginTop: 20 }}>
